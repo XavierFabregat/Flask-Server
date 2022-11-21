@@ -34,8 +34,19 @@ def user(user_id):
     if request.method == 'GET':
         return {"user": user_id}
     if request.method == 'POST':
+        f = open("users.json", "r")
+        users = f.read()
+        print(users)
+        f.close()
+        f = open("users.json", "w")
         data = json.loads(request.data)
-        return {"_id": user_id, **data}
+        usersArray = []
+        if users:
+             usersArray.append(*json.loads(users))
+        usersArray.append(data)
+        f.write(json.dumps(usersArray))
+        f.close()
+        return data
 
 # Running app
 if __name__ == '__main__':
