@@ -1,6 +1,7 @@
 // Importing modules
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import { UserForm } from "./components/Form/userForm";
 
 function App() {
 	// usestate for setting a javascript
@@ -11,6 +12,12 @@ function App() {
 		date: "",
 		programming: "",
 	});
+
+
+	const [user, setUser] = useState({
+        userName: '',
+        user_id: ''
+    })
 
 
   async function getDefRoot() {
@@ -44,7 +51,12 @@ function App() {
     getDefRoot();
 	}, []);
 
+	useEffect(() => {
+		console.log(user);
+	}, [user])
+
 	return (
+		<>
 		<div className="App">
 			<header className="App-header">
 				<h1>React and flask</h1>
@@ -55,7 +67,10 @@ function App() {
 				<p>{data.programming}</p>
 
 			</header>
+		<UserForm setUser={setUser}/>
 		</div>
+		</>
+
 	);
 }
 
