@@ -32,7 +32,13 @@ def hello_world():
 @app.route('/user/<user_id>', methods=['GET','POST'])
 def user(user_id):
     if request.method == 'GET':
-        return {"user": user_id}
+        f = open("users.json", "r")
+        users = json.loads(f.read())
+        for user in users:
+            print(user)
+            if user['userName'] == user_id:
+                return user
+        return {"error": "User not found"}, 404
     if request.method == 'POST':
         f = open("users.json", "r")
         users = f.read()
@@ -48,7 +54,7 @@ def user(user_id):
         usersArray.append(data)
         f.write(json.dumps(usersArray))
         f.close()
-        return data
+        return usersArray
 
 # Running app
 if __name__ == '__main__':
