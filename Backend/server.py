@@ -42,7 +42,9 @@ def user(user_id):
         data = json.loads(request.data)
         usersArray = []
         if users:
-             usersArray.append(*json.loads(users))
+            prevUsers = json.loads(users)
+            for user in prevUsers:
+                usersArray.append(user)
         usersArray.append(data)
         f.write(json.dumps(usersArray))
         f.close()
